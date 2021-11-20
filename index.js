@@ -9,12 +9,17 @@ const app = express()
 dotenv.config({path:'config.env'})
 const port = process.env.PORT || 8000;
 
+//dbConnection 
+const dbConnection = require('./server/database/connection');
+
+dbConnection();
+
 //for printing the logs
 app.use(morgan('tiny'))
 
 //parse request to body - parser
-app.use(bodyparser.urlencoded({urlencoded:false}))
-app.use(bodyparser.json());
+app.use(express.urlencoded({urlencoded:false}))
+app.use(express.json());
 
 //set view engine 
 app.set('view engine','ejs')
@@ -31,10 +36,6 @@ app.set('views',path.join(__dirname,'/views/'))
 
 
 
-app.get('/guru',(req,res)=>{
-    res.send('We are in Second Route Buddy');
-})
-
 app.listen(port,()=>{
-    console.log("Server Running");
+    console.log(`${port} Server Running`);
 })
